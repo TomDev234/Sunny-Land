@@ -5,17 +5,20 @@ using UnityEngine.SceneManagement;
 
 public class LevelLoader : MonoBehaviour
 {
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (SceneManager.GetActiveScene().name == "Scene 01")
+        if (collision.CompareTag(Tags.PLAYER_TAG))
         {
-            GemBehaviourScript.gemsCollected = 0;
-            SceneManager.LoadScene("Scene 02");
-        }
-        else if (SceneManager.GetActiveScene().name == "Scene 02")
-        {
-            GemBehaviourScript.gemsCollected = 0;
-            SceneManager.LoadScene("Scene 03");
+            if (SceneManager.GetActiveScene().name == "Scene 01")
+            {
+                GemBehaviourScript.gemsCollected = 0;
+                SceneManager.LoadScene("Scene 02");
+            }
+            else if (SceneManager.GetActiveScene().name == "Scene 02")
+            {
+                GemBehaviourScript.gemsCollected = 0;
+                SceneManager.LoadScene("Scene 03");
+            }
         }
     }
 }

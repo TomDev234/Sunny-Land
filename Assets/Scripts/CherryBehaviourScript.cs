@@ -15,11 +15,14 @@ public class CherryBehaviourScript : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        spriteRenderer.enabled = false;
-        boxCollider2d.enabled = false;
-        audioSource.PlayOneShot(audioSource.clip);
-        Destroy(gameObject, audioSource.clip.length);
+        if (collision.gameObject.CompareTag(Tags.PLAYER_TAG))
+        {
+            spriteRenderer.enabled = false;
+            boxCollider2d.enabled = false;
+            audioSource.PlayOneShot(audioSource.clip);
+            Destroy(gameObject, audioSource.clip.length);
+        }
     }
 }

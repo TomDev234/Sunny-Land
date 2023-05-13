@@ -30,6 +30,7 @@ public class PlayerBehaviourScript : MonoBehaviour
         MovePlayer();
         AnimatePlayer();
         JumpPlayer();
+        CrouchPlayer();
         PlayerFellOutOfLevel();
     }
 
@@ -51,7 +52,7 @@ public class PlayerBehaviourScript : MonoBehaviour
             // hurt Animation
             // decrease Health Points
             // if Health Points <= 0
-            Destroy(gameObject);
+            // Destroy(gameObject);
         }
     }
 
@@ -100,15 +101,14 @@ public class PlayerBehaviourScript : MonoBehaviour
 
     void CrouchPlayer()
     {
-        if (isGrounded && Input.GetButtonDown("Down"))
+        if (isGrounded && Input.GetKey("down"))
             animator.SetBool(Tags.CROUCH_PARAMETER, true);
-        if (!Input.GetButton("Down"))
+        if (!Input.GetKey("down"))
             animator.SetBool(Tags.CROUCH_PARAMETER, false);
     }
 
     void PlayerFellOutOfLevel()
     {
-        // if position == -20
         if (transform.position.y < offFallLevel)
             // Game Over
             Destroy(gameObject);
