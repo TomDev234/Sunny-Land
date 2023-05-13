@@ -6,7 +6,8 @@ public class PlayerBehaviourScript : MonoBehaviour
 {
     const float moveSpeed = 10f;
     const float jumpForce = 8f;
-    const float offFallLevel = -10f; 
+    const float offFallLevel = -10f;
+    int healthPoints = 100;
     [SerializeField] AudioSource fxAudioSource;
     [SerializeField] AudioSource musicAudioSource;
     [SerializeField] AudioClip[] audioClips;
@@ -51,8 +52,11 @@ public class PlayerBehaviourScript : MonoBehaviour
         {
             // hurt Animation
             // decrease Health Points
+            healthPoints -= 10;
             // if Health Points <= 0
-            // Destroy(gameObject);
+            if (healthPoints <= 0)
+                // Game Over Scene
+                Destroy(gameObject);
         }
     }
 
