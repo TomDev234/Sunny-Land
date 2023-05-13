@@ -4,32 +4,21 @@ using UnityEngine;
 
 public class VultureBehaviourScript : MonoBehaviour
 {
-    Vector3 position;
-    bool moveUpwards;
-    int counter = 0;
+    float amplitude = 1.0f;  // The amplitude of the sinusoidal movement
+    float frequency = 1.0f;  // The frequency of the sinusoidal movement
+    Vector3 startPosition;  // The initial position of the object
 
     // Start is called before the first frame update
     void Start()
     {
-        position = transform.position;
+        startPosition = transform.position;  // Store the initial position of the object
     }
 
     void FixedUpdate()
     {
-        if (counter == 100)
-        {
-            counter = 0;
-            if (position.y > 20)
-                moveUpwards = false;
-            if (position.y < 5)
-                moveUpwards = true;
-            if (moveUpwards)
-                position.y++;
-            if (!moveUpwards)
-                position.y--;
-            transform.position = position;
-
-        }
-        counter++;
+        // Calculate the new position based on time and the sinusoidal function
+        float newYPosition = startPosition.y + Mathf.Sin(Time.time * frequency) * amplitude;
+        // Update the object's position
+        transform.position = new Vector3(transform.position.x, newYPosition, transform.position.z);
     }
 }

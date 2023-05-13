@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class PlayerBehaviourScript : MonoBehaviour
 {
-    [SerializeField] float moveSpeed = 10f;
-    [SerializeField] float jumpForce = 8f;
+    const float moveSpeed = 10f;
+    const float jumpForce = 8f;
+    const float offFallLevel = -10f; 
     [SerializeField] AudioSource fxAudioSource;
     [SerializeField] AudioSource musicAudioSource;
     [SerializeField] AudioClip[] audioClips;
-
     Animator animator;
-
     SpriteRenderer spriteRenderer;
     Rigidbody2D rigidBody;
     float movementInput;
@@ -31,6 +30,12 @@ public class PlayerBehaviourScript : MonoBehaviour
         MovePlayer();
         AnimatePlayer();
         JumpPlayer();
+        PlayerFellOutOfLevel();
+    }
+
+    private void FixedUpdate()
+    {
+        animator.SetFloat(Tags.VERTICAL_SPEED_PARAMETER, rigidBody.velocity.y);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -40,6 +45,13 @@ public class PlayerBehaviourScript : MonoBehaviour
             isGrounded = true;
             animator.SetBool(Tags.GROUNDED_PARAMETER, true);
             animator.SetBool(Tags.JUMP_PARAMETER, false);
+        }
+        if (collision.gameObject.CompareTag(Tags.ENEMY_TAG))
+        {
+            // hurt Animation
+            // decrease Health Points
+            // if Health Points <= 0
+            Destroy(gameObject);
         }
     }
 
@@ -84,5 +96,21 @@ public class PlayerBehaviourScript : MonoBehaviour
             rigidBody.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
             fxAudioSource.PlayOneShot(fxAudioSource.clip);
         }
+    }
+
+    void CrouchPlayer()
+    {
+        if (isGrounded && Input.GetButtonDown("Down"))
+            animator.SetBool(Tags.CROUCH_PARAMETER, true);
+        if (!Input.GetButton("Down"))
+            animator.SetBool(Tags.CROUCH_PARAMETER, false);
+    }
+
+    void PlayerFellOutOfLevel()
+    {
+        // if position == -20
+        if (transform.position.y < offFallLevel)
+            // Game Over
+            Destroy(gameObject);
     }
 }
