@@ -5,8 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
-  - Gem Text
   - Enemy
+  - Health Text
+  - Gem Text
   layers:
   - Default
   - TransparentFX

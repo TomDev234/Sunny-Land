@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyBehaviourScript : MonoBehaviour
 {
     [HideInInspector] public float speed;
-    Rigidbody2D rigidBody;
+    protected Rigidbody2D rigidBody;
 
     // Start is called before the first frame update
     void Start()

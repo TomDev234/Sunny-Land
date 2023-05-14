@@ -8,6 +8,7 @@ public class Tags
     public const string GROUND_TAG = "Ground";
     public const string ENEMY_TAG = "Enemy";
     public const string GEM_TEXT = "Gem Text";
+    public const string HEALTH_TEXT = "Health Text";
     public const string RUN_PARAMETER = "Run";
     public const string JUMP_PARAMETER = "Jump";
     public const string CROUCH_PARAMETER = "Crouch";

@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerBehaviourScript : MonoBehaviour
 {
     const float moveSpeed = 10f;
     const float jumpForce = 8f;
     const float offFallLevel = -10f;
+    const float gameOverDelay = 2;
     int healthPoints = 100;
     [SerializeField] AudioSource fxAudioSource;
     [SerializeField] AudioSource musicAudioSource;
@@ -17,6 +19,7 @@ public class PlayerBehaviourScript : MonoBehaviour
     float movementInputHorizontal;
     float movementInputVertical;
     bool isGrounded = true;
+    Text healthText;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +27,8 @@ public class PlayerBehaviourScript : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rigidBody = GetComponent<Rigidbody2D>();
+        GameObject healthTextObject = GameObject.FindWithTag(Tags.HEALTH_TEXT);
+        healthText = healthTextObject.GetComponent<Text>();
     }
 
     // Update is called once per frame
@@ -52,12 +57,13 @@ public class PlayerBehaviourScript : MonoBehaviour
         if (collision.gameObject.CompareTag(Tags.ENEMY_TAG))
         {
             // hurt Animation
-            // decrease Health Points
             healthPoints -= 10;
-            // if Health Points <= 0
+            healthText.text = "Health " + healthPoints;
             if (healthPoints <= 0)
-                // Game Over Scene
-                Destroy(gameObject);
+            {
+                Invoke("GameOver", gameOverDelay);
+                Destroy(gameObject, gameOverDelay);
+            }
         }
     }
 
@@ -101,7 +107,7 @@ public class PlayerBehaviourScript : MonoBehaviour
         {
             animator.SetBool(Tags.JUMP_PARAMETER, true);
             rigidBody.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
-            fxAudioSource.PlayOneShot(fxAudioSource.clip);
+            fxAudioSource.PlayOneShot(audioClips[0]);
         }
     }
 
@@ -116,7 +122,14 @@ public class PlayerBehaviourScript : MonoBehaviour
     void PlayerFellOutOfLevel()
     {
         if (transform.position.y < offFallLevel)
-            // Game Over
-            Destroy(gameObject);
+        {
+            Invoke("GameOver", gameOverDelay);
+            Destroy(gameObject, gameOverDelay);
+        }
+    }
+
+    void GameOver()
+    {
+        MainMenu.GameOver();
     }
 }
