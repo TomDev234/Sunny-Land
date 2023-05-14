@@ -14,7 +14,8 @@ public class PlayerBehaviourScript : MonoBehaviour
     Animator animator;
     SpriteRenderer spriteRenderer;
     Rigidbody2D rigidBody;
-    float movementInput;
+    float movementInputHorizontal;
+    float movementInputVertical;
     bool isGrounded = true;
 
     // Start is called before the first frame update
@@ -71,18 +72,19 @@ public class PlayerBehaviourScript : MonoBehaviour
 
     void MovePlayer()
     {
-        movementInput = Input.GetAxisRaw("Horizontal"); // Raw means no smoothing Filter
-        transform.position += new Vector3(movementInput, 0f, 0f) * moveSpeed * Time.deltaTime;
+        movementInputHorizontal = Input.GetAxisRaw("Horizontal"); // Raw means no smoothing Filter
+        movementInputVertical = Input.GetAxisRaw("Vertical"); // Raw means no smoothing Filter
+        transform.position += new Vector3(movementInputHorizontal, 0f, 0f) * moveSpeed * Time.deltaTime;
     }
 
     void AnimatePlayer()
     {
-        if (movementInput > 0)
+        if (movementInputHorizontal > 0)
         {
             animator.SetBool(Tags.RUN_PARAMETER, true);
             spriteRenderer.flipX = false;
         }
-        else if (movementInput < 0)
+        else if (movementInputHorizontal < 0)
         {
             animator.SetBool(Tags.RUN_PARAMETER, true);
             spriteRenderer.flipX = true;
@@ -105,9 +107,9 @@ public class PlayerBehaviourScript : MonoBehaviour
 
     void CrouchPlayer()
     {
-        if (isGrounded && Input.GetKey("down"))
+        if (isGrounded && movementInputVertical < 0)
             animator.SetBool(Tags.CROUCH_PARAMETER, true);
-        if (!Input.GetKey("down"))
+        if (movementInputVertical >= 0)
             animator.SetBool(Tags.CROUCH_PARAMETER, false);
     }
 
