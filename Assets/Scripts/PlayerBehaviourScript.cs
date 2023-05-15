@@ -56,7 +56,6 @@ public class PlayerBehaviourScript : MonoBehaviour
         }
         if (collision.gameObject.CompareTag(Tags.ENEMY_TAG))
         {
-            // hurt Animation
             animator.SetBool(Tags.HURT_PARAMETER, true);
             healthPoints -= 10;
             healthText.text = "Health " + healthPoints;
