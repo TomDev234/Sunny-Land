@@ -8,7 +8,7 @@ public class PlayerBehaviourScript : MonoBehaviour
     const float moveSpeed = 10f;
     const float jumpForce = 8f;
     const float offFallLevel = -10f;
-    const float gameOverDelay = 2;
+    const float gameOverDelay = 1f;
     int healthPoints = 100;
     [SerializeField] AudioSource fxAudioSource;
     [SerializeField] AudioSource musicAudioSource;

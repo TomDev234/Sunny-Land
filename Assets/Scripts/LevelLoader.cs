@@ -19,6 +19,11 @@ public class LevelLoader : MonoBehaviour
                 GemBehaviourScript.gemsCollected = 0;
                 SceneManager.LoadScene("Scene 03");
             }
+            else if (SceneManager.GetActiveScene().name == "Scene 03")
+            {
+                GemBehaviourScript.gemsCollected = 0;
+                SceneManager.LoadScene("Win");
+            }
         }
     }
 }
