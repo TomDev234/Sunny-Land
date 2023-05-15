@@ -15,13 +15,13 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene("Scene 01");
     }
 
-    public static void QuitGame()
-    {
-        Application.Quit();
-    }
-
     public static void GameOver()
     {
         SceneManager.LoadScene("Game Over");
+    }
+
+    public static void QuitGame()
+    {
+        Application.Quit();
     }
 }
