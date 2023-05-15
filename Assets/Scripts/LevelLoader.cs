@@ -9,6 +9,7 @@ public class LevelLoader : MonoBehaviour
     {
         if (collision.CompareTag(Tags.PLAYER_TAG))
         {
+            // automate Scene Loader
             if (SceneManager.GetActiveScene().name == "Scene 01")
             {
                 GemBehaviourScript.gemsCollected = 0;
@@ -29,7 +30,6 @@ public class LevelLoader : MonoBehaviour
                 GemBehaviourScript.gemsCollected = 0;
                 SceneManager.LoadScene("Main Menu");
             }
-
         }
     }
 }
