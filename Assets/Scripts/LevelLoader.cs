@@ -24,6 +24,12 @@ public class LevelLoader : MonoBehaviour
                 GemBehaviourScript.gemsCollected = 0;
                 SceneManager.LoadScene("Win");
             }
+            else
+            {
+                GemBehaviourScript.gemsCollected = 0;
+                SceneManager.LoadScene("Main Menu");
+            }
+
         }
     }
 }
