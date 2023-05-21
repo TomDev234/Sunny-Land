@@ -9,27 +9,13 @@ public class LevelLoader : MonoBehaviour
     {
         if (collision.CompareTag(Tags.PLAYER_TAG))
         {
-            // automate Scene Loader
-            if (SceneManager.GetActiveScene().name == "Scene 01")
-            {
-                GemBehaviourScript.gemsCollected = 0;
-                SceneManager.LoadScene("Scene 02");
-            }
-            else if (SceneManager.GetActiveScene().name == "Scene 02")
-            {
-                GemBehaviourScript.gemsCollected = 0;
-                SceneManager.LoadScene("Scene 03");
-            }
-            else if (SceneManager.GetActiveScene().name == "Scene 03")
-            {
-                GemBehaviourScript.gemsCollected = 0;
-                SceneManager.LoadScene("Win");
-            }
-            else
-            {
-                GemBehaviourScript.gemsCollected = 0;
-                SceneManager.LoadScene("Main Menu");
-            }
+            GemBehaviourScript.gemsCollected = 0;
+            LoadNextScene();
         }
+    }
+
+    public void LoadNextScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }

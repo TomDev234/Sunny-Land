@@ -10,6 +10,7 @@ public class GemBehaviourScript : MonoBehaviour
     SpriteRenderer spriteRenderer;
     BoxCollider2D boxCollider2d;
     AudioSource audioSource;
+    int gemsInScene;
 
     private void Start()
     {
@@ -18,6 +19,7 @@ public class GemBehaviourScript : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         boxCollider2d = GetComponent<BoxCollider2D>();
         audioSource = GetComponent<AudioSource>();
+        gemsInScene = countGemsInScene();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -25,11 +27,19 @@ public class GemBehaviourScript : MonoBehaviour
         if (collision.gameObject.CompareTag(Tags.PLAYER_TAG))
         {
             gemsCollected++;
-            gemtText.text = "Gems " + gemsCollected;
+            gemtText.text = "Gems " + gemsCollected + "/" + gemsInScene;
             spriteRenderer.enabled = false;
             boxCollider2d.enabled = false;
             audioSource.PlayOneShot(audioSource.clip);
             Destroy(gameObject, audioSource.clip.length);
         }
+    }
+
+    int countGemsInScene()
+    {
+        int count;
+        GameObject gemsObject = GameObject.Find("Gems");
+        count = gemsObject.transform.childCount;
+        return count;
     }
 }
