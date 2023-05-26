@@ -6,17 +6,20 @@ using UnityEngine.SceneManagement;
 public class LevelLoader : MonoBehaviour
 {
     Animator animator;
-    float transitionTime = 1f;
-
+    float transitionTime = 2f;
+    AudioSource audioSource;
+    
     private void Start()
     {
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag(Tags.PLAYER_TAG))
         {
+            audioSource.Play();
             GemBehaviourScript.gemsCollected = 0;
             LoadNextScene();
         }

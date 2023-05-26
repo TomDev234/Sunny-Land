@@ -20,6 +20,7 @@ public class PlayerBehaviourScript : MonoBehaviour
     float movementInputVertical;
     bool isGrounded = true;
     Text healthText;
+    PlayerBehaviourScript playerBehaviourScript;
 
     // Animator Tags
     int verticalSpeedHash = Animator.StringToHash(Tags.VERTICAL_SPEED_PARAMETER);
@@ -37,6 +38,7 @@ public class PlayerBehaviourScript : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
         GameObject healthTextObject = GameObject.FindWithTag(Tags.HEALTH_TEXT);
         healthText = healthTextObject.GetComponent<Text>();
+        playerBehaviourScript = GetComponent<PlayerBehaviourScript>();
     }
 
     // Update is called once per frame
