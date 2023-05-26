@@ -24,7 +24,7 @@ public class AudioFX : MonoBehaviour
         audioSource.PlayOneShot(audioClips[i]);
     }
 
-    public void Play(int i, ref float length)
+    public void Play(int i, out float length)
     {
         audioSource.PlayOneShot(audioClips[i]);
         length = audioClips[i].length;

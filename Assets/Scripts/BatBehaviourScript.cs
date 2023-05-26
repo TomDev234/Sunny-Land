@@ -5,7 +5,7 @@ using static UnityEngine.GraphicsBuffer;
 
 public class BatBehaviourScript : EnemyBehaviourScript
 {
-    const float desiredHeight = 1.5f; // Desired constant height from the ground
+    const float desiredHeight = 1.65f; // Desired constant height from the ground
     [SerializeField] LayerMask groundLayerMask; // select the Layer in the Editor
     CircleCollider2D circleCollider2D;
 

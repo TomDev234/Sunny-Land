@@ -21,6 +21,14 @@ public class PlayerBehaviourScript : MonoBehaviour
     bool isGrounded = true;
     Text healthText;
 
+    // Animator Tags
+    int verticalSpeedHash = Animator.StringToHash(Tags.VERTICAL_SPEED_PARAMETER);
+    int groundedHash = Animator.StringToHash(Tags.GROUNDED_PARAMETER);
+    int jumpHash = Animator.StringToHash(Tags.JUMP_PARAMETER);
+    int hurtHash = Animator.StringToHash(Tags.HURT_PARAMETER);
+    int runHash = Animator.StringToHash(Tags.RUN_PARAMETER);
+    int crouchHash = Animator.StringToHash(Tags.CROUCH_PARAMETER);
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,14 +44,14 @@ public class PlayerBehaviourScript : MonoBehaviour
     {
         MovePlayer();
         AnimatePlayer();
-        JumpPlayer();
+        PlayerJump();
         CrouchPlayer();
         PlayerFellOutOfLevel();
     }
 
     private void FixedUpdate()
     {
-        animator.SetFloat(Tags.VERTICAL_SPEED_PARAMETER, rigidBody.velocity.y);
+        animator.SetFloat(verticalSpeedHash, rigidBody.velocity.y);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -51,12 +59,12 @@ public class PlayerBehaviourScript : MonoBehaviour
         if (collision.gameObject.CompareTag(Tags.GROUND_TAG))
         {
             isGrounded = true;
-            animator.SetBool(Tags.GROUNDED_PARAMETER, true);
-            animator.SetBool(Tags.JUMP_PARAMETER, false);
+            animator.SetBool(groundedHash, true);
+            animator.SetBool(jumpHash, false);
         }
         if (collision.gameObject.CompareTag(Tags.ENEMY_TAG))
         {
-            animator.SetBool(Tags.HURT_PARAMETER, true);
+            animator.SetBool(hurtHash, true);
             healthPoints -= 10;
             healthText.text = "Health " + healthPoints;
             if (healthPoints <= 0)
@@ -72,11 +80,11 @@ public class PlayerBehaviourScript : MonoBehaviour
         if (collision.gameObject.CompareTag(Tags.GROUND_TAG))
         {
             isGrounded = false;
-            animator.SetBool(Tags.GROUNDED_PARAMETER, false);
+            animator.SetBool(groundedHash, false);
         }
         if (collision.gameObject.CompareTag(Tags.ENEMY_TAG))
         {
-            animator.SetBool(Tags.HURT_PARAMETER, false);
+            animator.SetBool(hurtHash, false);
         }
     }
 
@@ -91,25 +99,25 @@ public class PlayerBehaviourScript : MonoBehaviour
     {
         if (movementInputHorizontal > 0)
         {
-            animator.SetBool(Tags.RUN_PARAMETER, true);
+            animator.SetBool(runHash, true);
             spriteRenderer.flipX = false;
         }
         else if (movementInputHorizontal < 0)
         {
-            animator.SetBool(Tags.RUN_PARAMETER, true);
+            animator.SetBool(runHash, true);
             spriteRenderer.flipX = true;
         }
         else
         {
-            animator.SetBool(Tags.RUN_PARAMETER, false);
+            animator.SetBool(runHash, false);
         }
     }
 
-    void JumpPlayer()
+    void PlayerJump()
     {
         if (isGrounded && Input.GetButtonDown("Jump"))
         {
-            animator.SetBool(Tags.JUMP_PARAMETER, true);
+            animator.SetBool(jumpHash, true);
             rigidBody.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
             fxAudioSource.PlayOneShot(audioClips[0]);
         }
@@ -118,9 +126,9 @@ public class PlayerBehaviourScript : MonoBehaviour
     void CrouchPlayer()
     {
         if (isGrounded && movementInputVertical < 0)
-            animator.SetBool(Tags.CROUCH_PARAMETER, true);
+            animator.SetBool(crouchHash, true);
         if (movementInputVertical >= 0)
-            animator.SetBool(Tags.CROUCH_PARAMETER, false);
+            animator.SetBool(crouchHash, false);
     }
 
     void PlayerFellOutOfLevel()

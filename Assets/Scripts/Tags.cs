@@ -15,4 +15,5 @@ public class Tags
     public const string GROUNDED_PARAMETER = "Grounded";
     public const string HURT_PARAMETER = "Hurt";
     public const string VERTICAL_SPEED_PARAMETER = "VerticalSpeed";
+    public const string START_PARAMETER = "Start";
 }

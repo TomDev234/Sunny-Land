@@ -5,6 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class LevelLoader : MonoBehaviour
 {
+    Animator animator;
+    float transitionTime = 1f;
+
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag(Tags.PLAYER_TAG))
@@ -16,6 +24,14 @@ public class LevelLoader : MonoBehaviour
 
     public void LoadNextScene()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        StartCoroutine(LoadScene(SceneManager.GetActiveScene().buildIndex + 1));
+    }
+
+    IEnumerator LoadScene(int index)
+    {
+        if (animator != null)
+            animator.SetTrigger(Tags.START_PARAMETER);
+        yield return new WaitForSeconds(transitionTime);
+        SceneManager.LoadScene(index);
     }
 }
