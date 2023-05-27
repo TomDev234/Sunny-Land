@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,7 +20,7 @@ public class PlayerBehaviourScript : MonoBehaviour
     float movementInputHorizontal;
     float movementInputVertical;
     bool isGrounded = true;
-    Text healthText;
+    TextMeshProUGUI healthText;
     PlayerBehaviourScript playerBehaviourScript;
 
     // Animator Tags
@@ -37,7 +38,7 @@ public class PlayerBehaviourScript : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         rigidBody = GetComponent<Rigidbody2D>();
         GameObject healthTextObject = GameObject.FindWithTag(Tags.HEALTH_TEXT);
-        healthText = healthTextObject.GetComponent<Text>();
+        healthText = healthTextObject.GetComponent<TextMeshProUGUI>();
         playerBehaviourScript = GetComponent<PlayerBehaviourScript>();
     }
 

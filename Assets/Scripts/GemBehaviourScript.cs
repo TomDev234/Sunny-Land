@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GemBehaviourScript : MonoBehaviour
 {
     [HideInInspector] public static int gemsCollected = 0;
-    Text gemtText;
+    TextMeshProUGUI gemtText;
     SpriteRenderer spriteRenderer;
     BoxCollider2D boxCollider2d;
     AudioSource audioSource;
@@ -15,7 +16,7 @@ public class GemBehaviourScript : MonoBehaviour
     private void Start()
     {
         GameObject gemTextObject = GameObject.FindWithTag(Tags.GEM_TEXT);
-        gemtText = gemTextObject.GetComponent<Text>();
+        gemtText = gemTextObject.GetComponent<TextMeshProUGUI>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         boxCollider2d = GetComponent<BoxCollider2D>();
         audioSource = GetComponent<AudioSource>();
