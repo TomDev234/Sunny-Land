@@ -20,8 +20,7 @@ public class PlayerBehaviourScript : MonoBehaviour
     float movementInputHorizontal;
     float movementInputVertical;
     bool isGrounded = true;
-    TextMeshProUGUI healthText;
-    PlayerBehaviourScript playerBehaviourScript;
+    Text healthText;
 
     // Animator Tags
     int verticalSpeedHash = Animator.StringToHash(Tags.VERTICAL_SPEED_PARAMETER);
@@ -38,13 +37,13 @@ public class PlayerBehaviourScript : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         rigidBody = GetComponent<Rigidbody2D>();
         GameObject healthTextObject = GameObject.FindWithTag(Tags.HEALTH_TEXT);
-        healthText = healthTextObject.GetComponent<TextMeshProUGUI>();
-        playerBehaviourScript = GetComponent<PlayerBehaviourScript>();
+        healthText = healthTextObject.GetComponent<Text>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        CheckESC();
         MovePlayer();
         AnimatePlayer();
         PlayerJump();
@@ -89,6 +88,13 @@ public class PlayerBehaviourScript : MonoBehaviour
         {
             animator.SetBool(hurtHash, false);
         }
+    }
+
+    void CheckESC()
+    {
+        bool escPressed = Input.GetKey(KeyCode.Escape);
+        if (escPressed)
+            MainMenu.LoadMainMenu();
     }
 
     void MovePlayer()
