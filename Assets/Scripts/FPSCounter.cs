@@ -7,12 +7,14 @@ using UnityEngine.UI;
 public class FPSCounter : MonoBehaviour
 {
     Text fpsText;
+    int targetFramerate = 60;
     const float updateInterval = 2f; // Update FPS in seconds
     float frameCount = 0;
 
     private void Start()
     {
-        Application.targetFrameRate = Screen.currentResolution.refreshRate;
+        // Application.targetFrameRate = Screen.currentResolution.refreshRate;
+        Application.targetFrameRate = targetFramerate;
         GameObject fpsTextObject = GameObject.Find("Text FPS");
         fpsText = fpsTextObject.GetComponent<Text>();
         InvokeRepeating("UpdateFPS", 0f, updateInterval);
