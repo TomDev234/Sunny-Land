@@ -11,9 +11,10 @@ public class PlayerBehaviourScript : MonoBehaviour
     [SerializeField] AudioClip[] audioClips;
     const float moveSpeed = 10f;
     const float jumpForce = 8f;
+    const float downForce = 4f;
     const float offFallLevel = -10f;
     const float gameOverDelay = 1f;
-    const float cancelJumpTime = 0.25f;
+    const float cancelJumpTime = 0.5f;
     int healthPoints = 100;
     Animator animator;
     SpriteRenderer spriteRenderer;
@@ -21,6 +22,7 @@ public class PlayerBehaviourScript : MonoBehaviour
     float movementInputHorizontal;
     float movementInputVertical;
     bool jumpPressed = false;
+    bool jumpReleased = false;
     bool isCrouching = false;
     bool isGrounded = true;
     Text healthText;
@@ -110,6 +112,8 @@ public class PlayerBehaviourScript : MonoBehaviour
             jumpPressed = true;
             StartCoroutine(CancelIsJumping());
         }
+        if (Input.GetButtonUp("Jump"))
+            jumpReleased = true;
     }
 
     void MovePlayer()
@@ -140,9 +144,15 @@ public class PlayerBehaviourScript : MonoBehaviour
         if (jumpPressed && isGrounded)
         {
             jumpPressed = false;
+            jumpReleased = false;
             animator.SetBool(jumpHash, true);
-            rigidBody.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+            rigidBody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             fxAudioSource.PlayOneShot(audioClips[0]);
+        }
+        if (jumpReleased && !isGrounded && rigidBody.velocity.y > 0)
+        {
+            jumpReleased = false;
+            rigidBody.AddForce(Vector2.down * downForce, ForceMode2D.Impulse);
         }
     }
 
