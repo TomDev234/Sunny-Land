@@ -6,19 +6,22 @@ using UnityEngine.UI;
 
 public class PlayerBehaviourScript : MonoBehaviour
 {
+    [SerializeField] AudioSource fxAudioSource;
+    [SerializeField] AudioSource musicAudioSource;
+    [SerializeField] AudioClip[] audioClips;
     const float moveSpeed = 10f;
     const float jumpForce = 8f;
     const float offFallLevel = -10f;
     const float gameOverDelay = 1f;
+    const float cancelJumpTime = 0.25f;
     int healthPoints = 100;
-    [SerializeField] AudioSource fxAudioSource;
-    [SerializeField] AudioSource musicAudioSource;
-    [SerializeField] AudioClip[] audioClips;
     Animator animator;
     SpriteRenderer spriteRenderer;
     Rigidbody2D rigidBody;
     float movementInputHorizontal;
     float movementInputVertical;
+    bool jumpPressed = false;
+    bool isCrouching = false;
     bool isGrounded = true;
     Text healthText;
 
@@ -44,10 +47,11 @@ public class PlayerBehaviourScript : MonoBehaviour
     void Update()
     {
         CheckESC();
+        GetInput();
         MovePlayer();
         AnimatePlayer();
-        PlayerJump();
-        CrouchPlayer();
+        HandleJump();
+        HandleCrouch();
         PlayerFellOutOfLevel();
     }
 
@@ -97,10 +101,19 @@ public class PlayerBehaviourScript : MonoBehaviour
             MainMenu.LoadMainMenu();
     }
 
-    void MovePlayer()
+    void GetInput()
     {
         movementInputHorizontal = Input.GetAxisRaw("Horizontal"); // Raw means no smoothing Filter
         movementInputVertical = Input.GetAxisRaw("Vertical"); // Raw means no smoothing Filter
+        if (Input.GetButtonDown("Jump"))
+        {
+            jumpPressed = true;
+            StartCoroutine(CancelIsJumping());
+        }
+    }
+
+    void MovePlayer()
+    {
         transform.position += new Vector3(movementInputHorizontal, 0f, 0f) * moveSpeed * Time.deltaTime;
     }
 
@@ -122,21 +135,31 @@ public class PlayerBehaviourScript : MonoBehaviour
         }
     }
 
-    void PlayerJump()
+    void HandleJump()
     {
-        if (isGrounded && Input.GetButtonDown("Jump"))
+        if (jumpPressed && isGrounded)
         {
+            jumpPressed = false;
             animator.SetBool(jumpHash, true);
             rigidBody.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
             fxAudioSource.PlayOneShot(audioClips[0]);
         }
     }
 
-    void CrouchPlayer()
+    IEnumerator CancelIsJumping()
     {
-        if (isGrounded && movementInputVertical < 0)
+        yield return new WaitForSeconds(cancelJumpTime);
+        jumpPressed = false;
+    }
+
+    void HandleCrouch()
+    {
+        if (!isCrouching && isGrounded && movementInputVertical < 0)
+        {
             animator.SetBool(crouchHash, true);
-        if (movementInputVertical >= 0)
+            isCrouching = true;
+        }
+        if (isCrouching && movementInputVertical >= 0)
             animator.SetBool(crouchHash, false);
     }
 
