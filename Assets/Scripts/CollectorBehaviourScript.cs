@@ -6,7 +6,7 @@ public class CollectorBehaviourScript : MonoBehaviour
 {
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag(Tags.ENEMY_TAG))
+        if (collision.gameObject.CompareTag(Tags.ENEMY))
         {
             Destroy(collision.gameObject);
         }

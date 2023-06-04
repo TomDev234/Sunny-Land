@@ -25,12 +25,12 @@ public class GemBehaviourScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag(Tags.PLAYER_TAG))
+        if (collision.gameObject.CompareTag(Tags.PLAYER))
         {
+            boxCollider2d.enabled = false;
+            spriteRenderer.enabled = false;
             gemsCollected++;
             gemtText.text = "Gems " + gemsCollected + "/" + gemsInScene;
-            spriteRenderer.enabled = false;
-            boxCollider2d.enabled = false;
             audioSource.PlayOneShot(audioSource.clip);
             Destroy(gameObject, audioSource.clip.length);
         }

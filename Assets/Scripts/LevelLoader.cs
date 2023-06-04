@@ -21,7 +21,7 @@ public class LevelLoader : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag(Tags.PLAYER_TAG))
+        if (collision.CompareTag(Tags.PLAYER))
         {
             musicAudioSource.Stop();
             audioSource.Play();
@@ -38,7 +38,7 @@ public class LevelLoader : MonoBehaviour
     IEnumerator LoadScene(int index)
     {
         if (animator != null)
-            animator.SetTrigger(Tags.START_PARAMETER);
+            animator.SetTrigger(AnimatorTags.START);
         yield return new WaitForSeconds(transitionTime);
         SceneManager.LoadScene(index);
     }
