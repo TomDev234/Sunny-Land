@@ -15,6 +15,7 @@ public class PlayerBehaviourScript : MonoBehaviour
     const float offFallLevel = -10f;
     const float gameOverDelay = 1f;
     const float cancelJumpTime = 0.5f;
+    const float maximumFallSpeed = 20f;
     int healthPoints = 100;
     Animator animator;
     SpriteRenderer spriteRenderer;
@@ -60,6 +61,8 @@ public class PlayerBehaviourScript : MonoBehaviour
     private void FixedUpdate()
     {
         animator.SetFloat(verticalSpeedHash, rigidBody.velocity.y);
+        if (rigidBody.velocity.y < 0)
+            rigidBody.velocity = new Vector2(rigidBody.velocity.x, Mathf.Max(rigidBody.velocity.y, -maximumFallSpeed));
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -144,7 +147,7 @@ public class PlayerBehaviourScript : MonoBehaviour
         if (jumpPressed && isGrounded)
         {
             jumpPressed = false;
-            // jumpReleased = false;
+            jumpReleased = false;
             animator.SetBool(jumpHash, true);
             rigidBody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             fxAudioSource.PlayOneShot(audioClips[0]);
@@ -170,8 +173,11 @@ public class PlayerBehaviourScript : MonoBehaviour
             animator.SetBool(crouchHash, true);
             isCrouching = true;
         }
-        if (isCrouching && movementInputVertical >= 0)
+        else if (isCrouching && movementInputVertical >= 0)
+        {
             animator.SetBool(crouchHash, false);
+            isCrouching = false;
+        }
     }
 
     void PlayerFellOutOfLevel()
