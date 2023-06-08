@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -15,7 +16,7 @@ public class GemBehaviourScript : MonoBehaviour
 
     private void Start()
     {
-        GameObject gemTextObject = GameObject.FindWithTag(Tags.GEM_TEXT);
+        GameObject gemTextObject = GameObject.Find(Tags.GEM_TEXT);
         gemtText = gemTextObject.GetComponent<Text>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         boxCollider2d = GetComponent<BoxCollider2D>();

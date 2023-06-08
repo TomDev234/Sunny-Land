@@ -38,7 +38,7 @@ public class LevelLoader : MonoBehaviour
     IEnumerator LoadScene(int index)
     {
         if (animator != null)
-            animator.SetTrigger(AnimatorTags.START);
+            animator.SetTrigger(AnimatorTags.startHash);
         yield return new WaitForSeconds(transitionTime);
         SceneManager.LoadScene(index);
     }

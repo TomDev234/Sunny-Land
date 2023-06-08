@@ -28,21 +28,13 @@ public class PlayerBehaviourScript : MonoBehaviour
     bool isGrounded = true;
     Text healthText;
 
-    // Animator Tags
-    int verticalSpeedHash = Animator.StringToHash(AnimatorTags.VERTICAL_SPEED);
-    int groundedHash = Animator.StringToHash(AnimatorTags.GROUNDED);
-    int jumpHash = Animator.StringToHash(AnimatorTags.JUMP);
-    int hurtHash = Animator.StringToHash(AnimatorTags.HURT);
-    int runHash = Animator.StringToHash(AnimatorTags.RUN);
-    int crouchHash = Animator.StringToHash(AnimatorTags.CROUCH);
-
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rigidBody = GetComponent<Rigidbody2D>();
-        GameObject healthTextObject = GameObject.FindWithTag(Tags.HEALTH_TEXT);
+        GameObject healthTextObject = GameObject.Find("Text Health");
         healthText = healthTextObject.GetComponent<Text>();
     }
 
@@ -60,7 +52,7 @@ public class PlayerBehaviourScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-        animator.SetFloat(verticalSpeedHash, rigidBody.velocity.y);
+        animator.SetFloat(AnimatorTags.verticalSpeedHash, rigidBody.velocity.y);
         if (rigidBody.velocity.y < 0)
             rigidBody.velocity = new Vector2(rigidBody.velocity.x, Mathf.Max(rigidBody.velocity.y, -maximumFallSpeed));
     }
@@ -70,12 +62,12 @@ public class PlayerBehaviourScript : MonoBehaviour
         if (collision.gameObject.CompareTag(Tags.GROUND))
         {
             isGrounded = true;
-            animator.SetBool(groundedHash, true);
-            animator.SetBool(jumpHash, false);
+            animator.SetBool(AnimatorTags.groundedHash, true);
+            animator.SetBool(AnimatorTags.jumpHash, false);
         }
         if (collision.gameObject.CompareTag(Tags.ENEMY))
         {
-            animator.SetBool(hurtHash, true);
+            animator.SetBool(AnimatorTags.hurtHash, true);
             healthPoints -= 10;
             healthText.text = "Health " + healthPoints;
             if (healthPoints <= 0)
@@ -91,11 +83,11 @@ public class PlayerBehaviourScript : MonoBehaviour
         if (collision.gameObject.CompareTag(Tags.GROUND))
         {
             isGrounded = false;
-            animator.SetBool(groundedHash, false);
+            animator.SetBool(AnimatorTags.groundedHash, false);
         }
         if (collision.gameObject.CompareTag(Tags.ENEMY))
         {
-            animator.SetBool(hurtHash, false);
+            animator.SetBool(AnimatorTags.hurtHash, false);
         }
     }
 
@@ -128,17 +120,17 @@ public class PlayerBehaviourScript : MonoBehaviour
     {
         if (movementInputHorizontal > 0)
         {
-            animator.SetBool(runHash, true);
+            animator.SetBool(AnimatorTags.runHash, true);
             spriteRenderer.flipX = false;
         }
         else if (movementInputHorizontal < 0)
         {
-            animator.SetBool(runHash, true);
+            animator.SetBool(AnimatorTags.runHash, true);
             spriteRenderer.flipX = true;
         }
         else
         {
-            animator.SetBool(runHash, false);
+            animator.SetBool(AnimatorTags.runHash, false);
         }
     }
 
@@ -148,7 +140,7 @@ public class PlayerBehaviourScript : MonoBehaviour
         {
             jumpPressed = false;
             jumpReleased = false;
-            animator.SetBool(jumpHash, true);
+            animator.SetBool(AnimatorTags.jumpHash, true);
             rigidBody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             fxAudioSource.PlayOneShot(audioClips[0]);
         }
@@ -170,12 +162,12 @@ public class PlayerBehaviourScript : MonoBehaviour
     {
         if (!isCrouching && isGrounded && movementInputVertical < 0)
         {
-            animator.SetBool(crouchHash, true);
+            animator.SetBool(AnimatorTags.crouchHash, true);
             isCrouching = true;
         }
         else if (isCrouching && movementInputVertical >= 0)
         {
-            animator.SetBool(crouchHash, false);
+            animator.SetBool(AnimatorTags.crouchHash, false);
             isCrouching = false;
         }
     }
