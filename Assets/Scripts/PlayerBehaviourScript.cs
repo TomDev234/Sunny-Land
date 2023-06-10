@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -34,7 +33,7 @@ public class PlayerBehaviourScript : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rigidBody = GetComponent<Rigidbody2D>();
-        GameObject healthTextObject = GameObject.Find("Text Health");
+        GameObject healthTextObject = GameObject.Find(Tags.HEALTH_TEXT);
         healthText = healthTextObject.GetComponent<Text>();
     }
 

@@ -12,7 +12,7 @@ public class FPSCounter : MonoBehaviour
     private void Start()
     {
         Application.targetFrameRate = targetFramerate;
-        GameObject fpsTextObject = GameObject.Find("Text FPS");
+        GameObject fpsTextObject = GameObject.Find(Tags.FPS_TEXT);
         fpsText = fpsTextObject.GetComponent<Text>();
         InvokeRepeating("UpdateFPS", 0f, updateInterval);
     }
