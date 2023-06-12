@@ -20,6 +20,6 @@ public class ActionEventSubscriber : MonoBehaviour
 
     private void HandleActionEvent(string message)
     {
-        Debug.Log("Action event received in subscriber: " + message);
+        // Debug.Log("Action event received in subscriber: " + message);
     }
 }
