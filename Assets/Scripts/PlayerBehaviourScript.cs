@@ -15,7 +15,7 @@ public class PlayerBehaviourScript : MonoBehaviour
     const float gameOverDelay = 1f;
     const float cancelJumpTime = 0.5f;
     const float maximumFallSpeed = 20f;
-    int healthPoints = 100;
+    public int healthPoints = 100;
     Animator animator;
     SpriteRenderer spriteRenderer;
     Rigidbody2D rigidBody;
@@ -68,7 +68,7 @@ public class PlayerBehaviourScript : MonoBehaviour
         {
             animator.SetBool(AnimatorTags.hurtHash, true);
             healthPoints -= 10;
-            healthText.text = "Health " + healthPoints;
+            UpdateHealthText();
             if (healthPoints <= 0)
             {
                 Invoke("GameOver", gameOverDelay);
@@ -183,5 +183,18 @@ public class PlayerBehaviourScript : MonoBehaviour
     void GameOver()
     {
         MainMenu.GameOver();
+    }
+
+    void UpdateHealthText()
+    {
+        Debug.Log("UpdateHealthText");
+        healthText.text = "Health " + healthPoints;
+    }
+
+    public void SetHealthPoints(int healthPoints)
+    {
+        Debug.Log("SetHealthPoints");
+        this.healthPoints = healthPoints;
+        UpdateHealthText();
     }
 }
