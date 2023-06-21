@@ -51,9 +51,13 @@ public class PlayerBehaviourScript : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (rigidBody.velocity.y < -maximumFallSpeed)
+            rigidBody.velocity = new Vector2(rigidBody.velocity.x, -maximumFallSpeed);
+
         animator.SetFloat(AnimatorTags.verticalSpeedHash, rigidBody.velocity.y);
-        if (rigidBody.velocity.y < 0)
-            rigidBody.velocity = new Vector2(rigidBody.velocity.x, Mathf.Max(rigidBody.velocity.y, -maximumFallSpeed));
+
+        // if (rigidBody.velocity.y < 0)
+            // rigidBody.velocity = new Vector2(rigidBody.velocity.x, Mathf.Max(rigidBody.velocity.y, -maximumFallSpeed));
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
