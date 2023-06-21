@@ -53,11 +53,7 @@ public class PlayerBehaviourScript : MonoBehaviour
     {
         if (rigidBody.velocity.y < -maximumFallSpeed)
             rigidBody.velocity = new Vector2(rigidBody.velocity.x, -maximumFallSpeed);
-
         animator.SetFloat(AnimatorTags.verticalSpeedHash, rigidBody.velocity.y);
-
-        // if (rigidBody.velocity.y < 0)
-            // rigidBody.velocity = new Vector2(rigidBody.velocity.x, Mathf.Max(rigidBody.velocity.y, -maximumFallSpeed));
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -191,13 +187,11 @@ public class PlayerBehaviourScript : MonoBehaviour
 
     void UpdateHealthText()
     {
-        Debug.Log("UpdateHealthText");
         healthText.text = "Health " + healthPoints;
     }
 
     public void SetHealthPoints(int healthPoints)
     {
-        Debug.Log("SetHealthPoints");
         this.healthPoints = healthPoints;
         UpdateHealthText();
     }
