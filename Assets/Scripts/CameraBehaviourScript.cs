@@ -8,7 +8,6 @@ public class CameraBehaviourScript : MonoBehaviour
     Transform playerTransform;
     Vector3 cameraPosition;
 
-    // Start is called before the first frame update
     void Start()
     {
         playerTransform = GameObject.FindWithTag("Player").transform;
