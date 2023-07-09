@@ -8,7 +8,7 @@ public class PlayerBehaviourScript : MonoBehaviour
     [SerializeField] AudioSource fxAudioSource;
     [SerializeField] AudioSource musicAudioSource;
     [SerializeField] AudioClip[] audioClips;
-    const float moveSpeed = 10f;
+    const float moveSpeed = 6f;
     const float jumpForce = 8f;
     const float downForce = 4f;
     const float offFallLevel = -10f;
