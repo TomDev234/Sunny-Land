@@ -5,17 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class LevelLoader : MonoBehaviour
 {
-    Animator animator;
-    float transitionTime = 2f;
     AudioSource audioSource, musicAudioSource;
-    GameObject musicGameObject;
+    float transitionTime = 2f;
     
     private void Start()
     {
-        animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
-        musicGameObject = GameObject.Find("MusicAudioSource");
-        musicAudioSource = musicGameObject.GetComponent<AudioSource>();
+        musicAudioSource = GameObject.Find("MusicAudioSource").GetComponent<AudioSource>();
 
     }
 
@@ -37,8 +33,6 @@ public class LevelLoader : MonoBehaviour
 
     IEnumerator LoadScene(int index)
     {
-        if (animator != null)
-            animator.SetTrigger(AnimatorTags.startHash);
         yield return new WaitForSeconds(transitionTime);
         SceneManager.LoadScene(index);
     }
