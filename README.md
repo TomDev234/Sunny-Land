@@ -1,2 +1,2 @@
 # Sunny-Land
- 2D Jump and Run Game
+ 2D Jump and Run Game Prototype
